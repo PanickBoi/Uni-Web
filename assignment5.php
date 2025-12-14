@@ -53,7 +53,7 @@ function writeStudents($fileName, $students) {
 
 
 function displayStudent($student) {
-    echo "<p>Αρ.Μητρωου: " . htmlspecialchars($student['id']) . "<br>Ονομα: " . htmlspecialchars($student['name']) . "<br>Απαντησεις: " . htmlspecialchars($student['answers']) . "<br>Βαθμος: " . $student['score'] . "</p>";
+    echo "<p class='student'>Αρ.Μητρωου: " . htmlspecialchars($student['id']) . "<br>Ονομα: " . htmlspecialchars($student['name']) . "<br>Απαντησεις: " . htmlspecialchars($student['answers']) . "<br>Βαθμος: " . $student['score'] . "</p>";
 }
 
 
@@ -118,18 +118,22 @@ usort($studentsForLowest, function($a, $b) {
 });
 $lowestStudents = array_slice($studentsForLowest, 0, 2);
 
-if (count($studentsForLowest)>2){
-	for ($i=2;$i<count($studentsForLowest);$i++){
-		if($studentsForLower[$i]["score"] === $studentsForLower[2]["score"]){
-			array_push($lowestStudents,$studentsForLower[$i]);
-		}
-	}
+if (count($studentsForLowest) > 2) {
+    for ($i = 2; $i < count($studentsForLowest); $i++) {
+        if ($studentsForLowest[$i]['score'] === $studentsForLowest[1]['score']) {
+            $lowestStudents[] = $studentsForLowest[$i];
+        } else {
+            break;
+        }
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="style.css">
 <title>Εφαρμογή 1 PHP</title>
 <meta charset="UTF-8">
 </head>
@@ -137,15 +141,19 @@ if (count($studentsForLowest)>2){
 
 <h2>Στοιχεια Φοιτητη</h2>
 <form method="post">
-Ονομα: <input type="text" name="name" required><br>
-Αρ.Μητρωου: <input type="text" name="id" required><br>
-Απαντησεις: <input type="text" name="answers" maxlength="5" required><br>
+<label for="name" >Ονομα:</label>
+<input type="text" name="name" id="name" required>
+<label for="id" >Αρ.Μητρωου:</label>
+<input type="text" name="id" id="id" required>
+<label for="answers" >Απαντησεις:</label>
+<input type="text" name="answers" id="answers" maxlength="5" required>
 <input type="submit" value="Submit">
 </form>
 
 <h2>Δες φοιτητη μεσου index</h2>
 <form method="get">
-Index του μαθητη: <input type="text" name="index" required><br>
+<label for="index" >Index του μαθητη:</label>
+<input type="text" name="index" id="index" required>
 <input type="submit" value="Δειξε μαθητη">
 </form>
 
